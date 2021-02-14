@@ -8,6 +8,7 @@ use File::Path;
 use File::Temp;
 use IO::Handle;
 use Errno qw(EROFS);
+use Errno qw(EBUSY);
 
 require("integration/common.pl");
 
@@ -226,7 +227,7 @@ sub writesDenied {
     rename($efn, $target);
     ok($! == EROFS, "rename denied, EROFS") or die();
     unlink($efn);
-    ok($! == EROFS, "unlink denied, EROFS");
+    ok($! == EROFS || $! == EBUSY, "unlink denied, EROFS");
     utime(undef, undef, $efn) ;
     ok($! == EROFS, "touch denied, EROFS");
     truncate($efn, 10);
