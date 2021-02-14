@@ -4,6 +4,8 @@
 : ${CHECK:=false}
 : ${INTEGRATION:=true}
 
+which ${CMAKE} || echo "Please, install cmake first." && exit 1
+
 ${CMAKE} --version
 
 CFG=$*
