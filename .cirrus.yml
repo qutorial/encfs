@@ -18,3 +18,12 @@ task:
     - brew install osxfuse
   script:
     - ./build.sh
+
+task:
+  name: MacOSBigSur
+  osx_instance:
+    image: big-sur-xcode-12.4
+  install_script:
+    - brew install osxfuse
+  script:
+    - ./build.sh
