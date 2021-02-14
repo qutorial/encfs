@@ -4,7 +4,11 @@
 : ${CHECK:=false}
 : ${INTEGRATION:=true}
 
-which ${CMAKE} || echo "Please, install cmake first." && exit 1
+while ! which ${CMAKE};  
+do 
+  echo "Please, install cmake first."
+  exit 1 
+done
 
 ${CMAKE} --version
 
