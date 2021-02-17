@@ -8,7 +8,7 @@ provision:
 	vagrant provision
 
 down: 
-	vagrant destroy
+	vagrant halt
 
 ssh:
 	vagrant ssh
