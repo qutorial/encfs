@@ -17,10 +17,8 @@ if [[ "$CHECK" == "true" ]]; then
   CFG="-DLINT=ON $CFG"
 fi
 
-if [[ ! -d build ]]
-then
-  mkdir build
-fi
+rm -rd build
+mkdir build
 
 cd build
 ${CMAKE} .. ${CFG}

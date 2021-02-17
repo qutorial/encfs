@@ -1,0 +1,50 @@
+- name: Install software to test encfs
+  hosts: all
+  become: yes
+  tasks:
+  
+  - name: Install Cmake
+    apt:
+      name: cmake
+      state: present
+      update_cache: yes  
+  
+  - name: Install FUSE
+    apt:
+      name: fuse
+      state: present
+
+  - name: Install perl
+    apt:
+      name: perl
+      state: present
+
+  - name: Install libfuse-dev
+    apt:
+      name: libfuse-dev
+      state: present
+
+  - name: Install build-essential
+    apt:
+      name: build-essential
+      state: present
+
+  - name: Install openssl
+    apt:
+      name: openssl
+      state: present
+
+  - name: Install openssl development packages
+    apt:
+      name: libssl-dev
+      state: present
+
+  - name: Install gettext
+    apt:
+      name: gettext
+      state: present
+
+  - name: Install xattr
+    apt:
+      name: xattr
+      state: present
