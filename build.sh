@@ -17,7 +17,7 @@ if [[ "$CHECK" == "true" ]]; then
   CFG="-DLINT=ON $CFG"
 fi
 
-rm -rd build
+rm -rf build
 mkdir build
 
 cd build
