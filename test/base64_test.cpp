@@ -26,25 +26,33 @@
  * 
  * */
 
-
 #include "gtest/gtest.h"
 
-#include "encfs/MemoryPool.h"
+#include "encfs/base64.h"
 
 using namespace encfs;
 
-TEST(MemoryPool, Allocate) {
-  auto block = MemoryPool::allocate(1024);
-  ASSERT_TRUE(block.data != nullptr);
-  ASSERT_TRUE(block.internalData != nullptr);
-  MemoryPool::release(block);
+#include <vector>
+#include <string>
+
+TEST(B64StandardEncode, StandardEncode) {
+  std::vector<unsigned char> testVector;
+  testVector.push_back('H');
+  testVector.push_back('e');
+  testVector.push_back('l');
+  testVector.push_back('l');
+  testVector.push_back('o');
+  ASSERT_TRUE(B64StandardEncode(testVector) == std::string("SGVsbG8="));
+
+  unsigned char *out = new unsigned char[200];
+  bool res = B64StandardDecode(out, (const unsigned char *)"SGVsbG8=", 8);
+  ASSERT_TRUE(std::string("Hello") == std::string((char *) out));
+  ASSERT_TRUE(res);
+
+  res = B64StandardDecode(out, (const unsigned char *)"Wrong Bullshit", 14);
+  ASSERT_FALSE(res);
+  res = B64StandardDecode(out, (const unsigned char *)"WrongBullshit", 13);
+  ASSERT_TRUE(res);
+  delete[](out);
 }
 
-TEST(MemoryPool, ReleaseDeletesContents) {
-  const int blockSize = 2048;
-  auto block = MemoryPool::allocate(blockSize);
-  MemoryPool::release(block);
-  char testblock [blockSize];
-  memset(testblock, 0, blockSize);
-  ASSERT_TRUE(memcmp(block.data, testblock, blockSize) == 0);
-}
