@@ -13,16 +13,7 @@ task:
 task:
   name: MacOS
   osx_instance:
-    image: catalina-xcode-12.2
-  install_script:
-    - brew install osxfuse
-  script:
-    - ./build.sh
-
-task:
-  name: MacOSBigSur
-  osx_instance:
-    image: big-sur-xcode-12.4
+    image: catalina-xcode-11.3.1
   install_script:
     - brew install osxfuse
   script:

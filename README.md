@@ -1,7 +1,7 @@
 # EncFS - an Encrypted Filesystem
 
 _Build Status_
- - Travis: [![Travis CI](https://travis-ci.org/qutorial/encfs.svg?branch=master)](https://travis-ci.org/vgough/encfs)
+ - Travis: [![Travis CI](https://travis-ci.org/qutorial/encfs.svg?branch=master)](https://travis-ci.org/qutorial/encfs)
  - Cirrus: [![Cirrus CI](https://api.cirrus-ci.com/github/qutorial/encfs.svg?branch=master)](https://cirrus-ci.com/github/qutorial/encfs)
 
 ## About
