@@ -28,7 +28,7 @@
 
 #include "gtest/gtest.h"
 
-#include "encfs/base64.h"
+#include "encfs/Interface.h"
 
 using namespace encfs;
 
@@ -36,24 +36,38 @@ using namespace encfs;
 #include <string>
 #include <iostream>
 
-TEST(B64StandardEncode, StandardEncode) {
-  std::vector<unsigned char> testVector;
-  testVector.push_back('H');
-  testVector.push_back('e');
-  testVector.push_back('l');
-  testVector.push_back('l');
-  testVector.push_back('o');
-  ASSERT_TRUE(B64StandardEncode(testVector) == std::string("SGVsbG8="));
+/* * *
+ * Useful reading to get the meaning of current, revision and age:  
+ * https://www.gnu.org/software/libtool/manual/html_node/Libtool-versioning.html
+ * and
+ * https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html#Updating-version-info
+ * 
+ * Current is the interface version, latest supported.
+ * Revision is a source code change number.
+ * Age defines all the supported interfaces: from current - age till current.
+ * 
+ * * */
 
-  unsigned char *out = new unsigned char[200];
-  bool res = B64StandardDecode(out, (const unsigned char *)"SGVsbG8=", 8);
-  ASSERT_TRUE(std::string("Hello") == std::string((char *) out));
-  ASSERT_TRUE(res);
-  std::cerr << "The following error message is expected: "; // space does not belong to base64 charset
-  res = B64StandardDecode(out, (const unsigned char *)"Wrong Bullshit", 14);
-  ASSERT_FALSE(res);
-  res = B64StandardDecode(out, (const unsigned char *)"WrongBullshit", 13);
-  ASSERT_TRUE(res);
-  delete[](out);
+TEST(Interface, ClassTest) {
+  Interface i1("superlib", 1, 0, 0);
+  Interface iSameAs1("superlib", 1, 0, 0);
+  Interface i2("superlib", 2, 0, 1); // version two, revision 0, supports 1
+  Interface iZero; // default constructor
+  
+  
+  ASSERT_TRUE(iZero.current() == 0);
+  ASSERT_TRUE(iZero.revision() == 0);
+  ASSERT_TRUE(iZero.age() == 0);
+
+  ASSERT_TRUE(i1 == iSameAs1);
+
+  ASSERT_TRUE(i2.implements(i1));
+  ASSERT_FALSE(i1.implements(i2));
 }
 
+
+TEST(Interface, DiffSumTest) {
+  Interface i1("superlib", 1, 50, 90);
+  Interface i2("superlib", 2, 0, 0);
+  ASSERT_TRUE(i2 > i1);  
+}
