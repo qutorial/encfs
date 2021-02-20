@@ -17,4 +17,5 @@ task:
   install_script:
     - brew install osxfuse
   script:
+    # The mac os x is hanging on Cirrus with integration tests. I run them locally instead.
     - export ENCFS_SKIP_INTEGRATION_TESTS=true; ./build.sh
