@@ -28,7 +28,10 @@
 
 #include "gtest/gtest.h"
 
+#include "encfs/BlockNameIO.h"
+
 #include "encfs/Interface.h"
+#include "encfs/SSL_Cipher.h"
 
 using namespace encfs;
 
@@ -36,42 +39,12 @@ using namespace encfs;
 #include <string>
 #include <iostream>
 
-/* * *
- * Useful reading to get the meaning of current, revision and age:  
- * https://www.gnu.org/software/libtool/manual/html_node/Libtool-versioning.html
- * and
- * https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html#Updating-version-info
- * 
- * Current is the interface version, latest supported.
- * Revision is a source code change number.
- * Age defines all the supported interfaces: from current - age till current.
- * 
- * * */
+TEST(BlockNameIO, LengthsTest) {
 
-TEST(Interface, ClassTest) {
-  Interface i1("superlib", 1, 0, 0);
-  Interface iSameAs1("superlib", 1, 0, 0);
-  Interface i2("superlib", 2, 0, 1); // version 2, revision 0, supports from 2-1=1 to 2
-  Interface i3("superlib", 3, 0, 1); // version 3, revision 0, supports from 3-1=2 to 2
-  Interface iZero; // default constructor
-  
-  
-  ASSERT_TRUE(iZero.current() == 0);
-  ASSERT_TRUE(iZero.revision() == 0);
-  ASSERT_TRUE(iZero.age() == 0);
+  bool caseInsensitive = false;
+  Interface currentInterface = BlockNameIO::CurrentInterface(caseInsensitive);
 
-  ASSERT_TRUE(i1 == iSameAs1);
-
-  ASSERT_TRUE(i2.implements(i1));
-  ASSERT_FALSE(i1.implements(i2));
-
-  ASSERT_TRUE(i3.implements(i2));
-  ASSERT_FALSE(i3.implements(i1));
-}
+  // BlockNameIO blockNameIo(currentInterface, cipher, key, blockSize, caseInsensitive);
 
 
-TEST(Interface, DiffSumTest) {
-  Interface i1("superlib", 1, 50, 90);
-  Interface i2("superlib", 2, 0, 0);
-  ASSERT_TRUE(i2 > i1);  
 }

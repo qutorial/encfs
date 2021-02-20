@@ -28,3 +28,6 @@ install: build
 .PHONY: install-dev-tools-mac
 install-dev-tools-mac:
 	./install-vagrant-tools-mac.sh
+
+run-unit-tests:
+	bash -c "cd build && cmake .. && make unittests && ./test/unittests"
