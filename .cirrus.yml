@@ -17,4 +17,4 @@ task:
   install_script:
     - brew install osxfuse
   script:
-    - ./build.sh
+    - export ENCFS_SKIP_INTEGRATION_TESTS=true; ./build.sh

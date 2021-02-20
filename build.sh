@@ -2,7 +2,12 @@
 
 : ${CMAKE:=cmake}
 : ${CHECK:=false}
-: ${INTEGRATION:=true}
+
+if [[ -z "$(printenv | grep ENCFS_SKIP_INTEGRATION)" ]]; then
+  : ${INTEGRATION:=true}
+else
+  : ${INTEGRATION:=false}
+fi
 
 while ! which ${CMAKE};  
 do 
@@ -27,6 +32,8 @@ make unittests
 make test
 if [[ "$INTEGRATION" == "true" ]]; then
   make integration
+else
+  echo "Skipping integration tests"
 fi
 
 cd ..
