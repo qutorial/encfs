@@ -21,5 +21,10 @@ build-ubuntu:
 build:
 	./build.sh
 
+.PHONY: install
 install: build
 	make install -C build
+
+.PHONY: install-dev-tools-mac
+install-dev-tools-mac:
+	./install-vagrant-tools-mac.sh
